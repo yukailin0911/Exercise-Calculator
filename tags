@@ -1,0 +1,94 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	/c2a5caa/
+ADD	element.h	/^    ADD,$/;"	e	enum:Kind
+BUF_SIZE	main.cpp	/^#define BUF_SIZE /;"	d	file:
+CFLAGS	Makefile	/^CFLAGS = -Weverything$/;"	m
+Calculator	Calculator.h	/^	Calculator(): _stack(MyStack(STACK_CAPACITY)), _elementBuf(nullptr), _bufSize(0) {}$/;"	f	class:Calculator
+Calculator	Calculator.h	/^class Calculator {$/;"	c
+DIVIDE	element.h	/^    DIVIDE,$/;"	e	enum:Kind
+Element	element.h	/^	Element() {}$/;"	f	class:Element
+Element	element.h	/^	Element(const Kind &k): _kind(k) {}$/;"	f	class:Element
+Element	element.h	/^class Element {$/;"	c
+ElementNode	element.h	/^	ElementNode(Element * const e): _next(NULL), _data(e) {}$/;"	f	class:ElementNode
+ElementNode	element.h	/^class ElementNode {$/;"	c
+ElementNode	myQueue.h	/^class ElementNode;$/;"	v	typeref:class:Element class
+HIGH	element.h	/^    HIGH,$/;"	e	enum:OperatorPriority
+HIGHEST	element.h	/^    HIGHEST$/;"	e	enum:OperatorPriority
+Kind	element.h	/^enum Kind {$/;"	g
+LOW	element.h	/^    LOW,$/;"	e	enum:OperatorPriority
+L_PARENTHESIS	element.h	/^    L_PARENTHESIS,$/;"	e	enum:Kind
+MEDIUM	element.h	/^    MEDIUM,$/;"	e	enum:OperatorPriority
+MULTIPLY	element.h	/^    MULTIPLY,$/;"	e	enum:Kind
+MY_ELEMENT_H	element.h	/^#define MY_ELEMENT_H$/;"	d
+MyQueue	myQueue.h	/^	MyQueue(): _front(nullptr), _rear(nullptr) {}$/;"	f	class:MyQueue
+MyQueue	myQueue.h	/^class MyQueue {$/;"	c
+MyStack	myStack.cpp	/^MyStack::MyStack(const int &size): _top(-1), _capacity(size) {$/;"	f	class:MyStack
+MyStack	myStack.h	/^class MyStack {$/;"	c
+OBJS_TEST_ELEMENT	Makefile	/^OBJS_TEST_ELEMENT = testElement.o element.o$/;"	m
+OPERAND	element.h	/^    OPERAND,$/;"	e	enum:Kind
+Operand	element.h	/^	Operand(const double &d): Element(OPERAND), _value(d) {}$/;"	f	class:Operand
+Operand	element.h	/^class Operand: public Element {$/;"	c
+Operator	element.cpp	/^Operator::Operator(const char &c) {$/;"	f	class:Operator
+Operator	element.h	/^class Operator: public Element {$/;"	c
+OperatorPriority	element.h	/^enum OperatorPriority {$/;"	g
+R_PARENTHESIS	element.h	/^    R_PARENTHESIS$/;"	e	enum:Kind
+STACK_CAPACITY	Calculator.h	/^    #define STACK_CAPACITY /;"	d
+SUBSTRACT	element.h	/^    SUBSTRACT,$/;"	e	enum:Kind
+_CALCULATOR_H	Calculator.h	/^#define _CALCULATOR_H$/;"	d
+_MY_QUEUE_H	myQueue.h	/^#define _MY_QUEUE_H$/;"	d
+_MY_STACK_H	myStack.h	/^#define _MY_STACK_H$/;"	d
+_array	myStack.h	/^	Element **_array;$/;"	m	class:MyStack	typeref:typename:Element **
+_bufSize	Calculator.h	/^	size_t _bufSize;$/;"	m	class:Calculator	typeref:typename:size_t
+_capacity	myStack.h	/^	int _capacity;$/;"	m	class:MyStack	typeref:typename:int
+_data	element.h	/^	Element * const _data;$/;"	m	class:ElementNode	typeref:typename:Element * const
+_elementBuf	Calculator.h	/^	Element* _elementBuf;$/;"	m	class:Calculator	typeref:typename:Element *
+_front	myQueue.h	/^	ElementNode *_front;$/;"	m	class:MyQueue	typeref:typename:ElementNode *
+_kind	element.h	/^	Kind _kind;$/;"	m	class:Element	typeref:typename:Kind
+_next	element.h	/^	ElementNode *_next;$/;"	m	class:ElementNode	typeref:typename:ElementNode *
+_priority	element.h	/^	OperatorPriority _priority;$/;"	m	class:Operator	typeref:typename:OperatorPriority
+_queue	Calculator.h	/^	MyQueue _queue;$/;"	m	class:Calculator	typeref:typename:MyQueue
+_rear	myQueue.h	/^	ElementNode *_rear;$/;"	m	class:MyQueue	typeref:typename:ElementNode *
+_stack	Calculator.h	/^	MyStack _stack;$/;"	m	class:Calculator	typeref:typename:MyStack
+_top	myStack.h	/^	int _top;$/;"	m	class:MyStack	typeref:typename:int
+_value	element.h	/^	double _value;$/;"	m	class:Operand	typeref:typename:double
+binaryEval	Calculator.cpp	/^Element Calculator::binaryEval(const Element &op, const Element &e1, const Element &e2) const {$/;"	f	class:Calculator	typeref:typename:Element
+calculate	Calculator.cpp	/^void Calculator::calculate(const char * const expression) {$/;"	f	class:Calculator	typeref:typename:void
+clean	Makefile	/^clean:$/;"	t
+clearBuf	Calculator.cpp	/^void Calculator::clearBuf() {$/;"	f	class:Calculator	typeref:typename:void
+clearFront	myQueue.cpp	/^void MyQueue::clearFront() {$/;"	f	class:MyQueue	typeref:typename:void
+data	element.cpp	/^Element* ElementNode::data() const {$/;"	f	class:ElementNode	typeref:typename:Element *
+deQueue	myQueue.cpp	/^Element MyQueue::deQueue() {$/;"	f	class:MyQueue	typeref:typename:Element
+enQueue	myQueue.cpp	/^void MyQueue::enQueue(const Element &element) {$/;"	f	class:MyQueue	typeref:typename:void
+evaluate	Calculator.cpp	/^void Calculator::evaluate(MyQueue &queue) {$/;"	f	class:Calculator	typeref:typename:void
+isEmpty	myQueue.cpp	/^bool MyQueue::isEmpty() const {$/;"	f	class:MyQueue	typeref:typename:bool
+isEmpty	myStack.cpp	/^bool MyStack::isEmpty() const {$/;"	f	class:MyStack	typeref:typename:bool
+isFull	myStack.cpp	/^bool MyStack::isFull() const {$/;"	f	class:MyStack	typeref:typename:bool
+isLParenthesis	element.cpp	/^bool Element::isLParenthesis() const {$/;"	f	class:Element	typeref:typename:bool
+isOperator	element.cpp	/^bool Element::isOperator() const {$/;"	f	class:Element	typeref:typename:bool
+isRParenthesis	element.cpp	/^bool Element::isRParenthesis() const {$/;"	f	class:Element	typeref:typename:bool
+main	main.cpp	/^int main(int argc, char *argv[]) {$/;"	f	typeref:typename:int
+main	testElement.cpp	/^int main() {$/;"	f	typeref:typename:int
+next	element.cpp	/^ElementNode* ElementNode::next() const {$/;"	f	class:ElementNode	typeref:typename:ElementNode *
+operator >=	element.cpp	/^bool Operator::operator>=(const Operator &op) const {$/;"	f	class:Operator	typeref:typename:bool
+parse	Calculator.cpp	/^Element* Calculator::parse(const char * const expression) {$/;"	f	class:Calculator	typeref:typename:Element *
+pop	myStack.cpp	/^MyStack::Element pop() {$/;"	f	typeref:typename:MyStack::Element
+postfixConvert	Calculator.cpp	/^void Calculator::postfixConvert(Element * const elementBuf) {$/;"	f	class:Calculator	typeref:typename:void
+push	myStack.cpp	/^void MyStack::push(const Element &element) {$/;"	f	class:MyStack	typeref:typename:void
+resize	myStack.cpp	/^void MyStack::resize() {$/;"	f	class:MyStack	typeref:typename:void
+setNext	element.cpp	/^void ElementNode::setNext(ElementNode *node) {$/;"	f	class:ElementNode	typeref:typename:void
+setPriority	element.cpp	/^void Operator::setPriority(const OperatorPriority &p) {$/;"	f	class:Operator	typeref:typename:void
+testElement	Makefile	/^testElement: ${OBJS_TEST_ELEMENT}$/;"	t
+testIsLParenthesis	testElement.cpp	/^void testIsLParenthesis() {$/;"	f	typeref:typename:void
+testIsOperator	testElement.cpp	/^void testIsOperator() {$/;"	f	typeref:typename:void
+testIsRParenthesis	testElement.cpp	/^void testIsRParenthesis() {$/;"	f	typeref:typename:void
+testOperatorOverloading	testElement.cpp	/^void testOperatorOverloading() {$/;"	f	typeref:typename:void
+top	myStack.cpp	/^Element& MyStack::top() const {$/;"	f	class:MyStack	typeref:typename:Element &
+value	element.cpp	/^double Operand::value() const {$/;"	f	class:Operand	typeref:typename:double
+~Calculator	Calculator.cpp	/^Calculator::~Calculator() {$/;"	f	class:Calculator
+~MyQueue	myQueue.cpp	/^MyQueue::~MyQueue() {$/;"	f	class:MyQueue
+~MyStack	myStack.cpp	/^MyStack::~MyStack() {$/;"	f	class:MyStack
