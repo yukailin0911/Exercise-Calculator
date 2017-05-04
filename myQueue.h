@@ -1,22 +1,24 @@
-#ifndef _MY_QUEUE_H
-#define _MY_QUEUE_H
+#ifndef MY_QUEUE_H
+#define MY_QUEUE_H
 
-class Element
+#include <stddef.h>
+
+class Element;
 class ElementNode;
 
 class MyQueue {
     public:
-	MyQueue(): _front(nullptr), _rear(nullptr) {}
+	MyQueue(): _front(NULL), _rear(NULL) {}
 	~MyQueue();
 	bool isEmpty() const;
-	Element deQueue();
-	void enQueue(const Element &);
+	Element* deQueue();
+	void enQueue(Element * const);
 
     private:
 	ElementNode *_front;
 	ElementNode *_rear;
 	
-	void clearFront();
+	void deleteFront();
 };
 
 #endif

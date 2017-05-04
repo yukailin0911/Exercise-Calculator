@@ -1,29 +1,30 @@
 #include <stdio.h>
+#include <stddef.h>
 #include "myQueue.h"
 #include "Element.h"
 
 MyQueue::~MyQueue() {
     while(!isEmpty())
-	clearFront();
+	deleteFront();
 }
 
 bool MyQueue::isEmpty() const {
-    return _front == nullptr;
+    return _front == NULL;
 }
 
-Element MyQueue::deQueue() {
+Element* MyQueue::deQueue() {
     if (isEmpty())
-	printf("Queue is empty.\n");
+	return NULL;
     else {
-	Element element = *(_front->data());
-	clearFront();
+	Element *element = _front->data();
+	deleteFront();
 
 	return element;
     }
 }
 
-void MyQueue::enQueue(const Element &element) {
-    ElementNode* node = new ElementNode(&element);
+void MyQueue::enQueue(Element * const element) {
+    ElementNode* node = new ElementNode(element);
 
     if (isEmpty())
 	_front = node;
@@ -33,7 +34,7 @@ void MyQueue::enQueue(const Element &element) {
     _rear = node;
 }
 
-void MyQueue::clearFront() {
+void MyQueue::deleteFront() {
     ElementNode *node = _front;
     _front = node->next();
     delete node;
