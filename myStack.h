@@ -1,7 +1,7 @@
-#ifndef _MY_STACK_H
-#define _MY_STACK_H
+#ifndef MY_STACK_H
+#define MY_STACK_H
 
-#include "Element.h"
+#include "element.h"
 
 class MyStack {
     public:
@@ -10,9 +10,9 @@ class MyStack {
 
 	bool isFull() const;
 	bool isEmpty() const;
-	Element pop();
-	void push(const Element &);
-	Element& top() const;
+	Element* pop();
+	void push(Element *element);
+	Element* top() const;
 
     private:
 	int _top;
@@ -20,6 +20,6 @@ class MyStack {
 	Element **_array;
 
 	void resize();
-}
+};
 
 #endif

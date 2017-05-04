@@ -1,11 +1,12 @@
 #include <stdio.h>
+#include <stddef.h>
 #include "myStack.h"
 
 MyStack::MyStack(const int &size): _top(-1), _capacity(size) {
     _array = new Element* [_capacity];
 
     for (int i = 0; i < _capacity; ++i)
-	_array[i] = nullptr;
+	_array[i] = NULL;
 }
 
 MyStack::~MyStack() {
@@ -20,35 +21,35 @@ bool MyStack::isEmpty() const {
     return _top == -1;
 }
 
-MyStack::Element pop() {
+Element* MyStack::pop() {
     if (isEmpty())
-	printf("Stack is empty. \n");
+	return NULL;
     else {
-	Element element = *_array[_top];
-	_array[_top--] = nullptr;
+	Element* element = _array[_top];
+	_array[_top--] = NULL;
 
 	return element;
     }
 }
 
-void MyStack::push(const Element &element) {
+void MyStack::push(Element *element) {
     if (isFull())
 	resize();
 
-    *_array[++_top] = element;
+    _array[++_top] = element;
 }
 
-Element& MyStack::top() const {
-    return *_array[_top];
+Element* MyStack::top() const {
+    return _array[_top];
 }
 
 void MyStack::resize() {
-    Element **new_array = new Element* [_capacity * 2];
+    Element **newArray = new Element* [_capacity * 2];
 
     for (int i = 0; i < _capacity; ++i)
-	new_array[i] = _array[i];
+	newArray[i] = _array[i];
 
     delete[] _array;
-    _array = new_array;
+    _array = newArray;
     _capacity *= 2;
 }
