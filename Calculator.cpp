@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cstring>
-#include "Calculator.h"
-#include "Element.h"
+#include "calculator.h"
+#include "element.h"
 
 using namespace std;
 
@@ -19,39 +19,46 @@ void Calculator::calculate(const char * const expression) {
 	cerr << err << endl;
     }
 
+    clearStack();
+    clearQueue();
     clearBuf();
 }
 
-Element* Calculator::parse(const char * const expression) {
+Element** Calculator::parse(const char * const expression) {
     _bufSize = strlen(expression);
-    Element *buf = new Element [_bufSize];
+    Element **buf = new Element* [_bufSize];
     
-    for (int i = 0; i < _bufSize; ++i)
-	buf[i] = Element(expression[i]);
+    for (int i = 0; i < _bufSize; ++i) {
+	if ((expression[i] >= 48) && (expression[i] <= 57))
+	    buf[i] = new Operand(atof(expression + i));
+	else
+	    buf[i] = new Operator(expression[i]);
+    }
 
     return buf;
 }
 
-void Calculator::postfixConvert(Element * const elementBuf) {
+void Calculator::postfixConvert(Element * const * const elementBuf) {
     for (int i = 0; i < _bufSize; ++i) {
-	if (elementBuf[i].isRParenthesis()) {
+	if (elementBuf[i]->isRParenthesis()) {
 	    while (1) {
 		if (_stack.isEmpty())
 		    throw "Unbalanced Parentheses";
 
-		Element element = _stack.pop();
-		if (element.isLParenthesis()) {
-		    element.setPriority(HIGHEST);
+		Element *element = _stack.pop();
+		if (element->isLParenthesis()) {
+		    ((Operator *)element)->setPriority(HIGHEST);
 		    break;
 		} else
-		    _queue.enQueue(element)
+		    _queue.enQueue(element);
 	    }
-	} else if (elementBuf[i].isOperator()) {
-	    while ((!_stack.isEmpty()) && (_stack.top() >= elementBuf[i]))
+	} else if (elementBuf[i]->isOperator()) {
+	    while ((!_stack.isEmpty()) &&
+		    (*(Operator *)_stack.top() >= *(Operator *)elementBuf[i]))
 		_queue.enQueue(_stack.pop());
 
-	    if (elementBuf[i].isLParenthesis())
-		elementBuf[i].setPriority(LOW);
+	    if (elementBuf[i]->isLParenthesis())
+		((Operator *)elementBuf[i])->setPriority(LOW);
 	    _stack.push(elementBuf[i]);
 	} else {
 	    _queue.enQueue(elementBuf[i]);
@@ -59,7 +66,7 @@ void Calculator::postfixConvert(Element * const elementBuf) {
     }
 
     while (!_stack.isEmpty()) {
-	if (_stack.top().isLParenthesis())
+	if (_stack.top()->isLParenthesis())
 	    throw "Unbalanced Parentheses";
 
 	_queue.enQueue(_stack.pop());
@@ -67,46 +74,64 @@ void Calculator::postfixConvert(Element * const elementBuf) {
 }
 
 void Calculator::evaluate(MyQueue &queue) {
-    while (!queue.isEmpty()) {
-	Element element = queue.deQueue();
+    if (queue.isEmpty())
+	throw "Invalid Expression";
 
-	if (element.isOperator()) {
-	    Element e[2];
+    while (!queue.isEmpty()) {
+	Element* element = queue.deQueue();
+
+	if (element->isOperator()) {
+	    Operand *e[2];
 
 	    for (int i = 1; i > -1; --i) {
 		if (_stack.isEmpty())
 			throw "Invalid Expression";
-		e[i] = _stack.pop();
+		e[i] = (Operand *)_stack.pop();
 	    }
 
-	    _stack.push(binaryEval(element, e[0], e[1]));
+	    _stack.push(binaryEval((Operator *)element, e[0], e[1]));
 	} else {
 	    _stack.push(element);
 	}
     }
 
-    Element outcome = _stack.pop();
+    Element* outcome = _stack.pop();
     if (_stack.isEmpty())
-	cout << outcome.value() << '\n';
+	cout << ((Operand *)outcome)->value() << '\n';
     else 
 	throw "Invalid Expression";
 }
 
-Element Calculator::binaryEval(const Element &op, const Element &e1, const Element &e2) const {
-    double lVal = e1.value(), rVal = e2.value();
+Element* Calculator::binaryEval(const Operator * const op,
+	const Operand * const e1, const Operand * const e2) const {
+    double lVal = e1->value(), rVal = e2->value();
 
-    switch(int(op.value())) {
-	case 43:
-	    return Element(lVal + rVal);
-	case 45:
-	    return Element(lVal - rVal);
-	case 42:
-	    return Element(lVal * rVal);
-	case 47:
-	    return Element(lVal / rVal);
+    switch(op->kind()) {
+	case ADD:
+	    return (new Operand(lVal + rVal));
+	case SUBSTRACT:
+	    return (new Operand(lVal - rVal));
+	case MULTIPLY:
+	    return (new Operand(lVal * rVal));
+	case DIVIDE:
+	    return (new Operand(lVal / rVal));
+	default:
+	    return NULL;
     }
 }
 
+void Calculator::clearStack() {
+    while(!_stack.isEmpty())
+	_stack.pop();
+}
+
+void Calculator::clearQueue() {
+    while(!_queue.isEmpty())
+	_queue.deQueue();
+}
+
 void Calculator::clearBuf() {
+    for (int i = 0; i < _bufSize; ++i)
+	delete _elementBuf[i];
     delete[] _elementBuf;
 }

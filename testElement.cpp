@@ -13,7 +13,7 @@ int main() {
     testIsRParenthesis();
     testOperatorOverloading();
 
-    printf("Passed testElement!\n");
+    printf("===== Passed testElement!\n");
 
     return 0;
 }

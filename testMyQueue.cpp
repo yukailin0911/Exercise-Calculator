@@ -12,7 +12,7 @@ int main() {
     testEnQueue();
     testDeQueue();
 
-    printf("===== Passed testMyQueue.\n");
+    printf("===== Passed testMyQueue!\n");
 
     return 0;
 }

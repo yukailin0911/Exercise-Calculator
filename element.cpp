@@ -50,6 +50,10 @@ Operator::Operator(const char &c) {
     }
 }
 
+Kind Operator::kind() const {
+    return _kind;
+}
+
 void Operator::setPriority(const OperatorPriority &p) {
     _priority = p;
 }

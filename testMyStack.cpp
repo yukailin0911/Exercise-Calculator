@@ -22,7 +22,7 @@ int main() {
     testPop();
     testIsFull();
 
-    printf("Passed testMyStack.\n");
+    printf("===== Passed testMyStack!\n");
     
     return 0;
 }

@@ -46,6 +46,7 @@ class Operator: public Element {
     public:
 	Operator(const char &);
 
+	Kind kind() const;
 	void setPriority(const OperatorPriority &);
 	bool operator>=(const Operator &) const;
 

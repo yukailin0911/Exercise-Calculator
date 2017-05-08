@@ -1,6 +1,7 @@
-#ifndef _CALCULATOR_H
-#define _CALCULATOR_H
+#ifndef CALCULATOR_H
+#define CALCULATOR_H
 
+#include <stddef.h>
 #include "myStack.h"
 #include "myQueue.h"
 
@@ -10,7 +11,7 @@ class Calculator {
     #define STACK_CAPACITY 20
 
     public:
-	Calculator(): _stack(MyStack(STACK_CAPACITY)), _elementBuf(nullptr), _bufSize(0) {}
+	Calculator(): _stack(MyStack(STACK_CAPACITY)), _elementBuf(NULL), _bufSize(0) {}
 	~Calculator();
 
 	void calculate(const char * const);
@@ -18,13 +19,16 @@ class Calculator {
     private:
 	MyStack _stack;
 	MyQueue _queue;
-	Element* _elementBuf;
+	Element** _elementBuf;
 	size_t _bufSize;
 
-	Element* parse(const char * const);
-	void postfixConvert(Element * const);
+	Element** parse(const char * const);
+	void postfixConvert(Element * const * const);
 	void evaluate(MyQueue &);
-	Element binaryEval(const Element &, const Element &, const Element &) const;
+	Element* binaryEval(const Operator * const,
+		const Operand * const, const Operand * const) const;
+	void clearStack();
+	void clearQueue();
 	void clearBuf();
 };
 
