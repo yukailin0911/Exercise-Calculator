@@ -41,16 +41,19 @@ Element** Calculator::parse(const char * const expression) {
 void Calculator::postfixConvert(Element * const * const elementBuf) {
     for (int i = 0; i < _bufSize; ++i) {
 	if (elementBuf[i]->isRParenthesis()) {
+	    Element *temp;
+
 	    while (1) {
 		if (_stack.isEmpty())
 		    throw "Unbalanced Parentheses";
 
-		Element *element = _stack.pop();
-		if (element->isLParenthesis()) {
-		    ((Operator *)element)->setPriority(HIGHEST);
+		temp = _stack.pop();
+		if (temp->isLParenthesis()) {
+		    ((Operator *)temp)->setPriority(HIGHEST);
 		    break;
-		} else
-		    _queue.enQueue(element);
+		} else {
+		    _queue.enQueue(temp);
+		}
 	    }
 	} else if (elementBuf[i]->isOperator()) {
 	    while ((!_stack.isEmpty()) &&
