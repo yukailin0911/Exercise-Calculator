@@ -39,7 +39,7 @@ void MyStack::push(Element *element) {
     _array[++_top] = element;
 }
 
-Element* MyStack::top() const {
+ const Element* const MyStack::top() const {
     return _array[_top];
 }
 

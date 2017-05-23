@@ -11,8 +11,8 @@ class MyStack {
 	bool isFull() const;
 	bool isEmpty() const;
 	Element* pop();
-	void push(Element *element);
-	Element* top() const;
+	void push(Element *);
+	const Element* const top() const;
 
     private:
 	int _top;

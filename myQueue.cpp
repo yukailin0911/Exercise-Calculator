@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stddef.h>
 #include "myQueue.h"
-#include "Element.h"
+#include "element.h"
 
 MyQueue::~MyQueue() {
     while(!isEmpty())
