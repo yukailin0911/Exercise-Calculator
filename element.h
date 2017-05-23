@@ -37,6 +37,7 @@ class Operand: public Element {
 	Operand(const double &d): Element(OPERAND), _value(d) {}
 
 	double value() const;
+	void setValue(double &);
 
     private:
 	double _value;

@@ -74,22 +74,26 @@ void Calculator::postfixConvert(Element * const * const elementBuf) {
 }
 
 void Calculator::evaluate(MyQueue &queue) {
+    Element *element;
+    Operand *e[2];
+    double value;
+
     if (queue.isEmpty())
 	throw "Invalid Expression";
 
     while (!queue.isEmpty()) {
-	Element* element = queue.deQueue();
+	element = queue.deQueue();
 
 	if (element->isOperator()) {
-	    Operand *e[2];
-
 	    for (int i = 1; i > -1; --i) {
 		if (_stack.isEmpty())
 			throw "Invalid Expression";
 		e[i] = (Operand *)_stack.pop();
 	    }
 
-	    _stack.push(binaryEval((Operator *)element, e[0], e[1]));
+	    value = binaryEval((Operator *)element, e[0], e[1]);
+	    e[0]->setValue(value);
+	    _stack.push(e[0]);
 	} else {
 	    _stack.push(element);
 	}
@@ -102,21 +106,21 @@ void Calculator::evaluate(MyQueue &queue) {
 	throw "Invalid Expression";
 }
 
-Element* Calculator::binaryEval(const Operator * const op,
+double Calculator::binaryEval(const Operator * const op,
 	const Operand * const e1, const Operand * const e2) const {
     double lVal = e1->value(), rVal = e2->value();
 
     switch(op->kind()) {
 	case ADD:
-	    return (new Operand(lVal + rVal));
+	    return lVal + rVal;
 	case SUBSTRACT:
-	    return (new Operand(lVal - rVal));
+	    return lVal - rVal;
 	case MULTIPLY:
-	    return (new Operand(lVal * rVal));
+	    return lVal * rVal;
 	case DIVIDE:
-	    return (new Operand(lVal / rVal));
+	    return lVal / rVal;
 	default:
-	    return NULL;
+	    throw "Invalid Expression";
     }
 }
 

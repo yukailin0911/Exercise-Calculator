@@ -16,6 +16,10 @@ double Operand::value() const {
     return _value;
 }
 
+void Operand::setValue(double &value) {
+    _value = value;
+}
+
 Operator::Operator(const char &c) {
     switch (c) {
 	case '(': {

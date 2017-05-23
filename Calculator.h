@@ -25,7 +25,7 @@ class Calculator {
 	Element** parse(const char * const);
 	void postfixConvert(Element * const * const);
 	void evaluate(MyQueue &);
-	Element* binaryEval(const Operator * const,
+	double binaryEval(const Operator * const,
 		const Operand * const, const Operand * const) const;
 	void clearStack();
 	void clearQueue();
