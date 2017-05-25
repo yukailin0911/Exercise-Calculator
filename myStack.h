@@ -1,10 +1,11 @@
 #ifndef MY_STACK_H
 #define MY_STACK_H
 
-#include "element.h"
+class Element;
 
 class MyStack {
     public:
+	MyStack();
 	MyStack(const int &);
 	~MyStack();
 

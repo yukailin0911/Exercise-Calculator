@@ -1,6 +1,12 @@
 #include <stdio.h>
-#include <stddef.h>
+#include <cstddef>
 #include "myStack.h"
+#include "element.h"
+
+MyStack::MyStack(): _top(-1), _capacity(1) {
+    _array = new Element* [_capacity];
+    _array[0] = NULL;
+}
 
 MyStack::MyStack(const int &size): _top(-1), _capacity(size) {
     _array = new Element* [_capacity];
@@ -39,8 +45,11 @@ void MyStack::push(Element *element) {
     _array[++_top] = element;
 }
 
- const Element* const MyStack::top() const {
-    return _array[_top];
+const Element* const MyStack::top() const {
+    if (isEmpty())
+	return NULL;
+    else
+	return _array[_top];
 }
 
 void MyStack::resize() {
