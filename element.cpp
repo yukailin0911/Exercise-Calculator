@@ -1,3 +1,4 @@
+#include <cstddef>
 #include "element.h"
 
 bool Element::isOperator() const {
