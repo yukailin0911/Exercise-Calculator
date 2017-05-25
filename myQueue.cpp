@@ -1,11 +1,19 @@
 #include <stdio.h>
-#include <stddef.h>
+#include <cstddef>
 #include "myQueue.h"
 #include "element.h"
 
+MyQueue::MyQueue(const MyQueue &queue): _front(NULL), _rear(NULL) {
+    const ElementNode* temp = queue.front();
+
+    while (temp) {
+	enQueue(temp->data());
+	temp = temp->next();
+    }
+}
+
 MyQueue::~MyQueue() {
-    while(!isEmpty())
-	deleteFront();
+    clear();
 }
 
 bool MyQueue::isEmpty() const {
@@ -32,6 +40,28 @@ void MyQueue::enQueue(Element * const element) {
 	_rear->setNext(node);
 
     _rear = node;
+}
+
+const ElementNode* MyQueue::front() const {
+    return _front;
+}
+
+MyQueue& MyQueue::operator=(const MyQueue &queue) {
+    if (this != &queue)
+	clear();
+
+    const ElementNode *temp = queue.front();
+    while (temp) {
+	enQueue(temp->data());
+	temp = temp->next();
+    }
+
+    return *this;
+}
+
+void MyQueue::clear() {
+    while (!isEmpty())
+	deleteFront();
 }
 
 void MyQueue::deleteFront() {
