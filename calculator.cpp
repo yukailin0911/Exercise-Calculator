@@ -1,33 +1,37 @@
 #include <iostream>
+#include <cstddef>
 #include <cstring>
 #include "calculator.h"
 #include "element.h"
+#include "myStack.h"
+#include "myQueue.h"
 
 using namespace std;
+
+const int STACK_CAPACITY = 20;
 
 Calculator::~Calculator() {
     clearBuf();
 }
 
 void Calculator::calculate(const char * const expression) {
+    MyQueue postfixExpression;
     _elementBuf = parse(expression);
 
     try {
-	postfixConvert(_elementBuf);
-	evaluate(_queue);
+	postfixExpression = postfixConvert(_elementBuf);
+	evaluate(postfixExpression);
     } catch (const char * const err) {
 	cerr << err << endl;
     }
 
-    clearStack();
-    clearQueue();
     clearBuf();
 }
 
 Element** Calculator::parse(const char * const expression) {
     _bufSize = strlen(expression);
     Element **buf = new Element* [_bufSize];
-    
+
     for (int i = 0; i < _bufSize; ++i) {
 	if ((expression[i] >= 48) && (expression[i] <= 57))
 	    buf[i] = new Operand(atof(expression + i));
@@ -38,45 +42,50 @@ Element** Calculator::parse(const char * const expression) {
     return buf;
 }
 
-void Calculator::postfixConvert(Element * const * const elementBuf) {
+MyQueue Calculator::postfixConvert(Element * const * const elementBuf) {
+    MyStack stack(STACK_CAPACITY);
+    MyQueue queue;
+
     for (int i = 0; i < _bufSize; ++i) {
 	if (elementBuf[i]->isRParenthesis()) {
 	    Element *temp;
 
 	    while (1) {
-		if (_stack.isEmpty())
+		temp = stack.pop();
+		if (!temp) {
 		    throw "Unbalanced Parentheses";
-
-		temp = _stack.pop();
-		if (temp->isLParenthesis()) {
+		}else if (temp->isLParenthesis()) {
 		    ((Operator *)temp)->setPriority(HIGHEST);
 		    break;
 		} else {
-		    _queue.enQueue(temp);
+		    queue.enQueue(temp);
 		}
 	    }
 	} else if (elementBuf[i]->isOperator()) {
-	    while ((!_stack.isEmpty()) &&
-		    (*(Operator *)_stack.top() >= *(Operator *)elementBuf[i]))
-		_queue.enQueue(_stack.pop());
+	    while ((stack.top()) &&
+		    (*(Operator *)stack.top() >= *(Operator *)elementBuf[i]))
+		queue.enQueue(stack.pop());
 
 	    if (elementBuf[i]->isLParenthesis())
 		((Operator *)elementBuf[i])->setPriority(LOW);
-	    _stack.push(elementBuf[i]);
+	    stack.push(elementBuf[i]);
 	} else {
-	    _queue.enQueue(elementBuf[i]);
+	    queue.enQueue(elementBuf[i]);
 	}
     }
 
-    while (!_stack.isEmpty()) {
-	if (_stack.top()->isLParenthesis())
+    while (!stack.isEmpty()) {
+	if (stack.top()->isLParenthesis())
 	    throw "Unbalanced Parentheses";
 
-	_queue.enQueue(_stack.pop());
+	queue.enQueue(stack.pop());
     }
+
+    return queue;
 }
 
 void Calculator::evaluate(MyQueue &queue) {
+    MyStack stack(STACK_CAPACITY);
     Element *element;
     Operand *e[2];
     double value;
@@ -89,21 +98,21 @@ void Calculator::evaluate(MyQueue &queue) {
 
 	if (element->isOperator()) {
 	    for (int i = 1; i > -1; --i) {
-		if (_stack.isEmpty())
-			throw "Invalid Expression";
-		e[i] = (Operand *)_stack.pop();
+		if (stack.isEmpty())
+		    throw "Invalid Expression";
+		e[i] = (Operand *)stack.pop();
 	    }
 
 	    value = binaryEval((Operator *)element, e[0], e[1]);
 	    e[0]->setValue(value);
-	    _stack.push(e[0]);
+	    stack.push(e[0]);
 	} else {
-	    _stack.push(element);
+	    stack.push(element);
 	}
     }
 
-    Element* outcome = _stack.pop();
-    if (_stack.isEmpty())
+    Element* outcome = stack.pop();
+    if (stack.isEmpty())
 	cout << ((Operand *)outcome)->value() << '\n';
     else 
 	throw "Invalid Expression";
@@ -125,16 +134,6 @@ double Calculator::binaryEval(const Operator * const op,
 	default:
 	    throw "Invalid Expression";
     }
-}
-
-void Calculator::clearStack() {
-    while(!_stack.isEmpty())
-	_stack.pop();
-}
-
-void Calculator::clearQueue() {
-    while(!_queue.isEmpty())
-	_queue.deQueue();
 }
 
 void Calculator::clearBuf() {
