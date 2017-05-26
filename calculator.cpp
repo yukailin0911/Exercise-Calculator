@@ -123,8 +123,11 @@ double Calculator::binaryEval(const Operator * const op,
 	    return lVal - rVal;
 	case MULTIPLY:
 	    return lVal * rVal;
-	case DIVIDE:
+	case DIVIDE: {
+	    if (!rVal)
+		throw "Invalid Expression";
 	    return lVal / rVal;
+	}
 	default:
 	    throw "Invalid Expression";
     }
