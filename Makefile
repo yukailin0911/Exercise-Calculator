@@ -8,6 +8,14 @@ CFLAGS = -Wall
 calculator: ${OBJS_CALCULATOR}
 	g++ -o calculator ${OBJS_CALCULATOR}
 
+debug:
+	g++ -g -c element.cpp
+	g++ -g -c myQueue.cpp
+	g++ -g -c myStack.cpp
+	g++ -g -c calculator.cpp
+	g++ -g -c main.cpp
+	g++ -g ${OBJS_CALCULATOR} -o calculator
+
 testElement: ${OBJS_TEST_ELEMENT}
 	g++ -o testElement ${OBJS_TEST_ELEMENT}
 
