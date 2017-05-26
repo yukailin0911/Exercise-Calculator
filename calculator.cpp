@@ -87,35 +87,29 @@ MyQueue Calculator::postfixConvert(Element * const * const elementBuf) {
 void Calculator::evaluate(MyQueue &queue) {
     MyStack stack(STACK_CAPACITY);
     Element *element;
-    Operand *e[2];
-    double value;
+    Operand *lOperand, *rOperand;
+    double tempValue;
 
-    if (queue.isEmpty())
-	throw "Invalid Expression";
-
-    while (!queue.isEmpty()) {
-	element = queue.deQueue();
-
+    while ((element = queue.deQueue())) {
 	if (element->isOperator()) {
-	    for (int i = 1; i > -1; --i) {
-		if (stack.isEmpty())
-		    throw "Invalid Expression";
-		e[i] = (Operand *)stack.pop();
-	    }
+	    rOperand = (Operand *)stack.pop();
+	    if (!rOperand) throw "Invalid Expression";
+	    lOperand = (Operand *)stack.pop();
+	    if (!lOperand) throw "Invalid Expression";
 
-	    value = binaryEval((Operator *)element, e[0], e[1]);
-	    e[0]->setValue(value);
-	    stack.push(e[0]);
+	    tempValue = binaryEval((Operator *)element, lOperand, rOperand);
+	    lOperand->setValue(tempValue);
+	    stack.push(lOperand);
 	} else {
 	    stack.push(element);
 	}
     }
 
     Element* outcome = stack.pop();
-    if (stack.isEmpty())
-	cout << ((Operand *)outcome)->value() << '\n';
-    else 
+    if (!outcome || !stack.isEmpty())
 	throw "Invalid Expression";
+    else
+	cout << ((Operand *)outcome)->value() << '\n';
 }
 
 double Calculator::binaryEval(const Operator * const op,
