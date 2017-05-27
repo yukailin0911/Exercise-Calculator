@@ -17,7 +17,7 @@ Calculator::~Calculator() {
 
 void Calculator::calculate(const char * const expression) {
     MyQueue postfixExpression;
-    _elementBuf = parse(expression);
+    parse(expression);
 
     try {
 	postfixExpression = postfixConvert(_elementBuf);
@@ -29,25 +29,42 @@ void Calculator::calculate(const char * const expression) {
     clearBuf();
 }
 
-Element** Calculator::parse(const char * const expression) {
-    _bufSize = strlen(expression);
-    Element **buf = new Element* [_bufSize];
+void Calculator::parse(const char * const expression) {
+    const char *ptrOperator = NULL, *ptrOperand = NULL;
+    const char OPERATORS[] = "+-*/()";
+    char *copyExpression = new char [strlen(expression) + 1];
+    size_t bufIndex = 0;
 
-    for (int i = 0; i < _bufSize; ++i) {
-	if ((expression[i] >= 48) && (expression[i] <= 57))
-	    buf[i] = new Operand(atof(expression + i));
-	else
-	    buf[i] = new Operator(expression[i]);
+    setBufSize(expression);
+    setElementBuf(_bufSize);
+
+    strcpy(copyExpression, expression);
+    ptrOperator = strpbrk(expression, OPERATORS);
+
+    if (ptrOperator == expression) {
+	ptrOperator = parseOperators(ptrOperator, bufIndex, OPERATORS);
     }
 
-    return buf;
+    ptrOperand = strtok(copyExpression, OPERATORS);
+    while (ptrOperand) {
+	_elementBuf[bufIndex] = new Operand(atof(ptrOperand));
+	++bufIndex;
+
+	if (ptrOperator)
+	    ptrOperator = parseOperators(ptrOperator, bufIndex, OPERATORS);
+
+	ptrOperand = strtok(NULL, OPERATORS);
+    }
+
+    delete[] copyExpression;
 }
 
 MyQueue Calculator::postfixConvert(Element * const * const elementBuf) {
+    size_t i(0);
     MyStack stack(STACK_CAPACITY);
     MyQueue queue;
 
-    for (int i = 0; i < _bufSize; ++i) {
+    while (elementBuf[i] && (i < _bufSize)) {
 	if (elementBuf[i]->isRParenthesis()) {
 	    Element *temp;
 
@@ -73,6 +90,8 @@ MyQueue Calculator::postfixConvert(Element * const * const elementBuf) {
 	} else {
 	    queue.enQueue(elementBuf[i]);
 	}
+
+	++i;
     }
 
     while (!stack.isEmpty()) {
@@ -111,6 +130,51 @@ void Calculator::evaluate(MyQueue &queue) {
 	throw "Invalid Expression";
     else
 	cout << ((Operand *)outcome)->value() << '\n';
+}
+
+void Calculator::setBufSize(const char * const expression) {
+    const char *pch = NULL;
+    const char OPERATORS[] = "+-*/()";
+    _bufSize = 0;
+
+    pch = strpbrk(expression, OPERATORS);
+    while (pch) {
+	_bufSize += 2;
+	pch = strpbrk(pch + 1, OPERATORS);
+    }
+
+    ++_bufSize;
+}
+
+void Calculator::setElementBuf(const size_t &bufSize) {
+    if (_elementBuf)
+	clearBuf();
+
+    if (bufSize == 0)
+	_elementBuf = NULL;
+    else {
+	_elementBuf = new Element* [bufSize];
+
+	for (int i = 0; i < bufSize; ++i)
+	    _elementBuf[i] = NULL;
+    }
+}
+
+const char* Calculator::parseOperators(const char *ptrOperator,
+	size_t &bufIndex, const char *OPERATORS) {
+    _elementBuf[bufIndex] = new Operator(*ptrOperator);
+    ++bufIndex;
+
+    const char *nextOperator = strpbrk(ptrOperator + 1, OPERATORS);
+    while (nextOperator && ((nextOperator - ptrOperator) == 1)) {
+	ptrOperator = nextOperator;
+	_elementBuf[bufIndex] = new Operator(*ptrOperator);
+	++bufIndex;
+	nextOperator = strpbrk(ptrOperator + 1, OPERATORS);
+    }
+
+    ptrOperator = nextOperator;
+    return ptrOperator;
 }
 
 double Calculator::binaryEval(const Operator * const op,

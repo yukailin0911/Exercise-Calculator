@@ -19,9 +19,12 @@ class Calculator {
 	Element** _elementBuf;
 	size_t _bufSize;
 
-	Element** parse(const char * const);
+	void parse(const char * const);
 	MyQueue postfixConvert(Element * const * const);
 	void evaluate(MyQueue &);
+	void setBufSize(const char * const);
+	void setElementBuf(const size_t &);
+	const char* parseOperators(const char *, size_t &, const char *);
 	double binaryEval(const Operator * const,
 		const Operand * const, const Operand * const) const;
 	void clearBuf();
