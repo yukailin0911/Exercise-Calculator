@@ -4,6 +4,7 @@
 #include <cstddef>
 
 enum Kind {
+    KIND_DUMMY = 0,
     OPERAND,
     ADD,
     SUBSTRACT,
@@ -14,6 +15,7 @@ enum Kind {
 };
 
 enum OperatorPriority {
+    PRIORITY_DUMMY = 0,
     LOW,
     MEDIUM,
     HIGH,
