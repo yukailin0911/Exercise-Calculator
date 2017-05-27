@@ -1,5 +1,6 @@
-#include <stdio.h>
+#include <cstdio>
 #include <cstddef>
+#include <cstring>
 #include "myStack.h"
 #include "element.h"
 
@@ -55,8 +56,7 @@ const Element* const MyStack::top() const {
 void MyStack::resize() {
     Element **newArray = new Element* [_capacity * 2];
 
-    for (int i = 0; i < _capacity; ++i)
-	newArray[i] = _array[i];
+    memcpy(newArray, _array, _capacity * sizeof(Element*));
 
     delete[] _array;
     _array = newArray;
