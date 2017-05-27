@@ -173,8 +173,7 @@ const char* Calculator::parseOperators(const char *ptrOperator,
 	nextOperator = strpbrk(ptrOperator + 1, OPERATORS);
     }
 
-    ptrOperator = nextOperator;
-    return ptrOperator;
+    return nextOperator;
 }
 
 double Calculator::binaryEval(const Operator * const op,
