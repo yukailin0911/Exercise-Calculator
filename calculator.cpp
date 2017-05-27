@@ -11,7 +11,8 @@ using namespace std;
 const int STACK_CAPACITY = 20;
 
 Calculator::~Calculator() {
-    clearBuf();
+    if (_elementBuf)
+	clearBuf();
 }
 
 void Calculator::calculate(const char * const expression) {
@@ -134,7 +135,15 @@ double Calculator::binaryEval(const Operator * const op,
 }
 
 void Calculator::clearBuf() {
-    for (int i = 0; i < _bufSize; ++i)
-	delete _elementBuf[i];
+    size_t index(0);
+
+    while (_elementBuf[index] && (index < _bufSize)) {
+	    delete _elementBuf[index];
+	    ++index;
+    }
+
     delete[] _elementBuf;
+
+    _bufSize = 0;
+    _elementBuf = NULL;
 }
