@@ -5,22 +5,22 @@ class Element;
 
 class MyStack {
     public:
-	MyStack();
-	MyStack(const int &);
-	~MyStack();
+        MyStack();
+        MyStack(const int &);
+        ~MyStack();
 
-	bool isFull() const;
-	bool isEmpty() const;
-	Element* pop();
-	void push(Element *);
-	const Element* const top() const;
+        bool isFull() const;
+        bool isEmpty() const;
+        Element* pop();
+        void push(Element *);
+        const Element* const top() const;
 
     private:
-	int _top;
-	int _capacity;
-	Element **_array;
+        int _top;
+        int _capacity;
+        Element **_array;
 
-	void resize();
+        void resize();
 };
 
 #endif

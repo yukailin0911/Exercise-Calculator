@@ -23,35 +23,35 @@ void Operand::setValue(double &value) {
 
 Operator::Operator(const char &c) {
     switch (c) {
-	case '(': {
-		_priority = HIGHEST;
-		_kind = L_PARENTHESIS;
-	    } break;
+        case '(': {
+                _priority = HIGHEST;
+                _kind = L_PARENTHESIS;
+            } break;
 
-	case ')': {
-		_priority = HIGHEST;
-		_kind = R_PARENTHESIS;
-	    } break;
+        case ')': {
+                _priority = HIGHEST;
+                _kind = R_PARENTHESIS;
+            } break;
 
-	case '*': {
-		_priority = HIGH;
-		_kind = MULTIPLY;
-	    } break;
+        case '*': {
+                _priority = HIGH;
+                _kind = MULTIPLY;
+            } break;
 
-	case '/': {
-		_priority = HIGH;
-		_kind = DIVIDE;
-	    } break;
+        case '/': {
+                _priority = HIGH;
+                _kind = DIVIDE;
+            } break;
 
-	case '+': {
-		_priority = MEDIUM;
-		_kind = ADD;
-	    } break;
+        case '+': {
+                _priority = MEDIUM;
+                _kind = ADD;
+            } break;
 
-	case '-': {
-		_priority = MEDIUM;
-		_kind = SUBSTRACT;
-	    } break;
+        case '-': {
+                _priority = MEDIUM;
+                _kind = SUBSTRACT;
+            } break;
     }
 }
 

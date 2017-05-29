@@ -24,50 +24,50 @@ enum OperatorPriority {
 
 class Element {
     public:
-	Element() {}
-	Element(const Kind &k): _kind(k) {}
-	bool isOperator() const;
-	bool isLParenthesis() const;
-	bool isRParenthesis() const;
+        Element() {}
+        Element(const Kind &k): _kind(k) {}
+        bool isOperator() const;
+        bool isLParenthesis() const;
+        bool isRParenthesis() const;
 
     protected:
-	Kind _kind;
+        Kind _kind;
 };
 
 class Operand: public Element {
     public:
-	Operand(const double &d): Element(OPERAND), _value(d) {}
+        Operand(const double &d): Element(OPERAND), _value(d) {}
 
-	double value() const;
-	void setValue(double &);
+        double value() const;
+        void setValue(double &);
 
     private:
-	double _value;
+        double _value;
 };
 
 class Operator: public Element {
     public:
-	Operator(const char &);
+        Operator(const char &);
 
-	Kind kind() const;
-	void setPriority(const OperatorPriority &);
-	bool operator>=(const Operator &) const;
+        Kind kind() const;
+        void setPriority(const OperatorPriority &);
+        bool operator>=(const Operator &) const;
 
     private:
-	OperatorPriority _priority;
+        OperatorPriority _priority;
 };
 
 class ElementNode {
     public:
-	ElementNode(Element * const e): _next(NULL), _data(e) {}
+        ElementNode(Element * const e): _next(NULL), _data(e) {}
 
-	ElementNode* next() const;
-	Element* data() const;
-	void setNext(ElementNode *);
+        ElementNode* next() const;
+        Element* data() const;
+        void setNext(ElementNode *);
 
     private:
-	ElementNode *_next;
-	Element * const _data;
+        ElementNode *_next;
+        Element * const _data;
 };
 
 #endif

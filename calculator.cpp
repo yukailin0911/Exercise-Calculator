@@ -12,7 +12,7 @@ const int STACK_CAPACITY = 20;
 
 Calculator::~Calculator() {
     if (_elementBuf)
-	clearBuf();
+        clearBuf();
 }
 
 void Calculator::calculate(const char * const expression) {
@@ -20,10 +20,10 @@ void Calculator::calculate(const char * const expression) {
     parse(expression);
 
     try {
-	postfixExpression = postfixConvert(_elementBuf);
-	evaluate(postfixExpression);
+        postfixExpression = postfixConvert(_elementBuf);
+        evaluate(postfixExpression);
     } catch (const char * const err) {
-	cerr << err << endl;
+        cerr << err << endl;
     }
 
     clearBuf();
@@ -42,18 +42,18 @@ void Calculator::parse(const char * const expression) {
     ptrOperator = strpbrk(expression, OPERATORS);
 
     if (ptrOperator == expression) {
-	ptrOperator = parseOperators(ptrOperator, bufIndex, OPERATORS);
+        ptrOperator = parseOperators(ptrOperator, bufIndex, OPERATORS);
     }
 
     ptrOperand = strtok(copyExpression, OPERATORS);
     while (ptrOperand) {
-	_elementBuf[bufIndex] = new Operand(atof(ptrOperand));
-	++bufIndex;
+        _elementBuf[bufIndex] = new Operand(atof(ptrOperand));
+        ++bufIndex;
 
-	if (ptrOperator)
-	    ptrOperator = parseOperators(ptrOperator, bufIndex, OPERATORS);
+        if (ptrOperator)
+            ptrOperator = parseOperators(ptrOperator, bufIndex, OPERATORS);
 
-	ptrOperand = strtok(NULL, OPERATORS);
+        ptrOperand = strtok(NULL, OPERATORS);
     }
 
     delete[] copyExpression;
@@ -65,40 +65,40 @@ MyQueue Calculator::postfixConvert(Element * const * const elementBuf) {
     MyQueue queue;
 
     while (elementBuf[i] && (i < _bufSize)) {
-	if (elementBuf[i]->isRParenthesis()) {
-	    Element *temp;
+        if (elementBuf[i]->isRParenthesis()) {
+            Element *temp;
 
-	    while (1) {
-		temp = stack.pop();
-		if (!temp) {
-		    throw "Unbalanced Parentheses";
-		}else if (temp->isLParenthesis()) {
-		    ((Operator *)temp)->setPriority(HIGHEST);
-		    break;
-		} else {
-		    queue.enQueue(temp);
-		}
-	    }
-	} else if (elementBuf[i]->isOperator()) {
-	    while ((stack.top()) &&
-		    (*(Operator *)stack.top() >= *(Operator *)elementBuf[i]))
-		queue.enQueue(stack.pop());
+            while (1) {
+                temp = stack.pop();
+                if (!temp) {
+                    throw "Unbalanced Parentheses";
+                }else if (temp->isLParenthesis()) {
+                    ((Operator *)temp)->setPriority(HIGHEST);
+                    break;
+                } else {
+                    queue.enQueue(temp);
+                }
+            }
+        } else if (elementBuf[i]->isOperator()) {
+            while ((stack.top()) &&
+                    (*(Operator *)stack.top() >= *(Operator *)elementBuf[i]))
+                queue.enQueue(stack.pop());
 
-	    if (elementBuf[i]->isLParenthesis())
-		((Operator *)elementBuf[i])->setPriority(LOW);
-	    stack.push(elementBuf[i]);
-	} else {
-	    queue.enQueue(elementBuf[i]);
-	}
+            if (elementBuf[i]->isLParenthesis())
+                ((Operator *)elementBuf[i])->setPriority(LOW);
+            stack.push(elementBuf[i]);
+        } else {
+            queue.enQueue(elementBuf[i]);
+        }
 
-	++i;
+        ++i;
     }
 
     while (!stack.isEmpty()) {
-	if (stack.top()->isLParenthesis())
-	    throw "Unbalanced Parentheses";
+        if (stack.top()->isLParenthesis())
+            throw "Unbalanced Parentheses";
 
-	queue.enQueue(stack.pop());
+        queue.enQueue(stack.pop());
     }
 
     return queue;
@@ -111,25 +111,25 @@ void Calculator::evaluate(MyQueue &queue) {
     double tempValue;
 
     while ((element = queue.deQueue())) {
-	if (element->isOperator()) {
-	    rOperand = (Operand *)stack.pop();
-	    if (!rOperand) throw "Invalid Expression";
-	    lOperand = (Operand *)stack.pop();
-	    if (!lOperand) throw "Invalid Expression";
+        if (element->isOperator()) {
+            rOperand = (Operand *)stack.pop();
+            if (!rOperand) throw "Invalid Expression";
+            lOperand = (Operand *)stack.pop();
+            if (!lOperand) throw "Invalid Expression";
 
-	    tempValue = binaryEval((Operator *)element, lOperand, rOperand);
-	    lOperand->setValue(tempValue);
-	    stack.push(lOperand);
-	} else {
-	    stack.push(element);
-	}
+            tempValue = binaryEval((Operator *)element, lOperand, rOperand);
+            lOperand->setValue(tempValue);
+            stack.push(lOperand);
+        } else {
+            stack.push(element);
+        }
     }
 
     Element* outcome = stack.pop();
     if (!outcome || !stack.isEmpty())
-	throw "Invalid Expression";
+        throw "Invalid Expression";
     else
-	cout << ((Operand *)outcome)->value() << '\n';
+        cout << ((Operand *)outcome)->value() << '\n';
 }
 
 void Calculator::setBufSize(const char * const expression) {
@@ -139,8 +139,8 @@ void Calculator::setBufSize(const char * const expression) {
 
     pch = strpbrk(expression, OPERATORS);
     while (pch) {
-	_bufSize += 2;
-	pch = strpbrk(pch + 1, OPERATORS);
+        _bufSize += 2;
+        pch = strpbrk(pch + 1, OPERATORS);
     }
 
     ++_bufSize;
@@ -148,52 +148,52 @@ void Calculator::setBufSize(const char * const expression) {
 
 void Calculator::setElementBuf(const size_t &bufSize) {
     if (_elementBuf)
-	clearBuf();
+        clearBuf();
 
     if (bufSize == 0)
-	_elementBuf = NULL;
+        _elementBuf = NULL;
     else {
-	_elementBuf = new Element* [bufSize];
+        _elementBuf = new Element* [bufSize];
 
-	for (int i = 0; i < bufSize; ++i)
-	    _elementBuf[i] = NULL;
+        for (int i = 0; i < bufSize; ++i)
+            _elementBuf[i] = NULL;
     }
 }
 
 const char* Calculator::parseOperators(const char *ptrOperator,
-	size_t &bufIndex, const char *OPERATORS) {
+        size_t &bufIndex, const char *OPERATORS) {
     _elementBuf[bufIndex] = new Operator(*ptrOperator);
     ++bufIndex;
 
     const char *nextOperator = strpbrk(ptrOperator + 1, OPERATORS);
     while (nextOperator && ((nextOperator - ptrOperator) == 1)) {
-	ptrOperator = nextOperator;
-	_elementBuf[bufIndex] = new Operator(*ptrOperator);
-	++bufIndex;
-	nextOperator = strpbrk(ptrOperator + 1, OPERATORS);
+        ptrOperator = nextOperator;
+        _elementBuf[bufIndex] = new Operator(*ptrOperator);
+        ++bufIndex;
+        nextOperator = strpbrk(ptrOperator + 1, OPERATORS);
     }
 
     return nextOperator;
 }
 
 double Calculator::binaryEval(const Operator * const op,
-	const Operand * const e1, const Operand * const e2) const {
+        const Operand * const e1, const Operand * const e2) const {
     double lVal = e1->value(), rVal = e2->value();
 
     switch(op->kind()) {
-	case ADD:
-	    return lVal + rVal;
-	case SUBSTRACT:
-	    return lVal - rVal;
-	case MULTIPLY:
-	    return lVal * rVal;
-	case DIVIDE: {
-	    if (!rVal)
-		throw "Invalid Expression";
-	    return lVal / rVal;
-	}
-	default:
-	    throw "Invalid Expression";
+        case ADD:
+            return lVal + rVal;
+        case SUBSTRACT:
+            return lVal - rVal;
+        case MULTIPLY:
+            return lVal * rVal;
+        case DIVIDE: {
+            if (!rVal)
+                throw "Invalid Expression";
+            return lVal / rVal;
+        }
+        default:
+            throw "Invalid Expression";
     }
 }
 
@@ -201,8 +201,8 @@ void Calculator::clearBuf() {
     size_t index(0);
 
     while (_elementBuf[index] && (index < _bufSize)) {
-	    delete _elementBuf[index];
-	    ++index;
+        delete _elementBuf[index];
+        ++index;
     }
 
     delete[] _elementBuf;

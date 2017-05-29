@@ -13,7 +13,7 @@ MyStack::MyStack(const int &size): _top(-1), _capacity(size) {
     _array = new Element* [_capacity];
 
     for (int i = 0; i < _capacity; ++i)
-	_array[i] = NULL;
+        _array[i] = NULL;
 }
 
 MyStack::~MyStack() {
@@ -30,27 +30,27 @@ bool MyStack::isEmpty() const {
 
 Element* MyStack::pop() {
     if (isEmpty())
-	return NULL;
+        return NULL;
     else {
-	Element* element = _array[_top];
-	_array[_top--] = NULL;
+        Element* element = _array[_top];
+        _array[_top--] = NULL;
 
-	return element;
+        return element;
     }
 }
 
 void MyStack::push(Element *element) {
     if (isFull())
-	resize();
+        resize();
 
     _array[++_top] = element;
 }
 
 const Element* const MyStack::top() const {
     if (isEmpty())
-	return NULL;
+        return NULL;
     else
-	return _array[_top];
+        return _array[_top];
 }
 
 void MyStack::resize() {

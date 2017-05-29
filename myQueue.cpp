@@ -7,8 +7,8 @@ MyQueue::MyQueue(const MyQueue &queue): _front(NULL), _rear(NULL) {
     const ElementNode* temp = queue.front();
 
     while (temp) {
-	enQueue(temp->data());
-	temp = temp->next();
+        enQueue(temp->data());
+        temp = temp->next();
     }
 }
 
@@ -22,12 +22,12 @@ bool MyQueue::isEmpty() const {
 
 Element* MyQueue::deQueue() {
     if (isEmpty())
-	return NULL;
+        return NULL;
     else {
-	Element *element = _front->data();
-	deleteFront();
+        Element *element = _front->data();
+        deleteFront();
 
-	return element;
+        return element;
     }
 }
 
@@ -35,9 +35,9 @@ void MyQueue::enQueue(Element * const element) {
     ElementNode* node = new ElementNode(element);
 
     if (isEmpty())
-	_front = node;
+        _front = node;
     else 
-	_rear->setNext(node);
+        _rear->setNext(node);
 
     _rear = node;
 }
@@ -48,12 +48,12 @@ const ElementNode* MyQueue::front() const {
 
 MyQueue& MyQueue::operator=(const MyQueue &queue) {
     if (this != &queue)
-	clear();
+        clear();
 
     const ElementNode *temp = queue.front();
     while (temp) {
-	enQueue(temp->data());
-	temp = temp->next();
+        enQueue(temp->data());
+        temp = temp->next();
     }
 
     return *this;
@@ -61,7 +61,7 @@ MyQueue& MyQueue::operator=(const MyQueue &queue) {
 
 void MyQueue::clear() {
     while (!isEmpty())
-	deleteFront();
+        deleteFront();
 }
 
 void MyQueue::deleteFront() {
