@@ -14,4 +14,4 @@ debug:
 	g++ -g ${OBJS_CALCULATOR} -o calculator
 
 clean:
-	rm *.o calculator testElement testMyStack testMyQueue
+	rm *.o calculator 
