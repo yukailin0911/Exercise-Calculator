@@ -22,7 +22,7 @@ Input | Output
 (100+2+(33*2) | Unbalanced Parentheses
 (100+2+(33*2))+- | Invalid Expression
 
-## Installaion
+## Installation
 
 With Terminal on OSX or Linux
 
