@@ -5,14 +5,14 @@ This is a simple calculator program, written in C++, that evaluates an infix ari
 
 ## Introduction
 
-This program first converts an infix expression to a postfix one, and then evaluates it with a simple stack data structure. It handles invalid expressions, and specifically points out those with unbalanced paratheses.
+This program first converts an infix expression to a postfix one, and then evaluates it with a simple stack data structure. It handles invalid expressions, and specifically points out those with unbalanced parentheses.
 
 ### Input
 - A sequence of characters composed of "0123456789+-*/()" (with length smaller than `BUF_SIZE` in `main.cpp`")
 
 ### Output
 - Evaluated value, if it is a valid expression
-- Prompt "Unbalanced Parantheses", if it is an invalid expression with unmatched left and right parantheses
+- Prompt "Unbalanced Parentheses", if it is an invalid expression with unmatched left and right parentheses
 - Prompt "Invalid Expression", if it is an invalid expression with other conditions
 
 ### Exmaples
